@@ -1,28 +1,34 @@
 import chartUp from '../assets/chart-up.svg';
 import chartDown from '../assets/chart-down.svg';
-
-function TableCoin({coins}) {
+import { LineWave } from 'react-loader-spinner'
+function TableCoin({coins,isLoading}) {
   return (
     <div>
-      <table>
-        
-        <thead>
-          <tr>
-            <th>Coin</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>24h</th>
-            <th>Total Volume</th>
-            <th></th>
-          </tr>
-        </thead>
+      {isLoading?<LineWave
+          height="200"
+          width="200"
+          color="#4fa94d"
+          middleLineColor="red"
+          
+                  />:
+        <table>
+          <thead>
+            <tr>
+              <th>Coin</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>24h</th>
+              <th>Total Volume</th>
+              <th></th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {coins.map((coin)=>(<TableRow coin={coin} key={coin.id}/>))}
-        </tbody>
+          <tbody>
+            {coins.map((coin)=>(<TableRow coin={coin} key={coin.id}/>))}
+          </tbody>
 
-      </table>
-    </div>
+          </table>}
+     </div>
   )
 }
 
