@@ -1,9 +1,12 @@
+import Layout from "./layouts/Layout";
 import HomePage from "./templates/HomePage";
 
 function App() {
  return (
     <>
-     <HomePage/>
+     <Layout>
+      <HomePage/>
+    </Layout>
     </>
   )
 }
