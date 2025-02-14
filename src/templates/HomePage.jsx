@@ -13,6 +13,9 @@ function HomePage() {
     const[page,setPage]=useState(1);
     const[currency,setCurrency]=useState("usd");
     const[chart,setChart]=useState(null);
+    const[coin1,setCoin1]=useState(null);
+    
+
     
     useEffect(()=>{
       setIsLoading(true)
@@ -31,8 +34,8 @@ function HomePage() {
     },[page,currency])
   return (
     <div>
-      <Search currency={currency} setCurrency={setCurrency}/>
-      <TableCoin coins={coins} isLoading={isLoading} setChart={setChart}/>
+      <Search currency={currency} setCurrency={setCurrency} setCoin1={setCoin1} />
+      <TableCoin coins={coins} isLoading={isLoading} setChart={setChart} currency={currency} coin1={coin1} setCoin1={setCoin1}/>
       <Pagination page={page} setPage={setPage}/>
       {!!chart&&<Chart chart={chart} setChart={setChart}/>}
     </div>

@@ -16,16 +16,16 @@ function Pagination({page,setPage}) {
   return (
     <div className={styles.pagination}>
         <button onClick={previousHandler} className={page===1?styles.disabled:null}>previous</button>
-        <button onClick={PaginationHandler} className={page===1?styles.selected:null}>1</button>
-        <button onClick={PaginationHandler} className={page===2?styles.selected:null}>2</button>
+        <p onClick={PaginationHandler} className={page===1?styles.selected:styles.unselected}>1</p>
+        <p onClick={PaginationHandler} className={page===2?styles.selected:styles.unselected}>2</p>
         {page>2 && page<9&&(
           <>
             <span>...</span>
             <p className={styles.selected}>{page}</p>
           </>)}
         <span>...</span>
-        <button onClick={PaginationHandler} className={page===9?styles.selected:null}>9</button>
-        <button onClick={PaginationHandler} className={page===10?styles.selected:null}>10</button>
+        <p onClick={PaginationHandler} className={page===9?styles.selected:styles.unselected}>9</p>
+        <p onClick={PaginationHandler} className={page===10?styles.selected:styles.unselected}>10</p>
         <button onClick={nextHandler}className={page===10?styles.disabled:null}>next</button>
     </div>
   )

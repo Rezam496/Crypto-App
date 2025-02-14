@@ -1,12 +1,16 @@
 import { LineWave } from 'react-loader-spinner';
 
+import { FaEuroSign } from "react-icons/fa";
+import { BsCurrencyYen } from "react-icons/bs";
+
 import chartUp from '../assets/chart-up.svg';
 import chartDown from '../assets/chart-down.svg';
 
 import styles from './TableCoin.module.css';
 import { marketChart } from '../services/cryptoApi';
 
-function TableCoin({coins,isLoading,setChart}) {
+function TableCoin({coins,isLoading,setChart,currency,coin1,setCoin1}) {
+  
   return (
     <div className={styles.container}>
       {isLoading?<LineWave
@@ -28,7 +32,7 @@ function TableCoin({coins,isLoading,setChart}) {
           </thead>
 
           <tbody>
-            {coins.map((coin)=>(<TableRow coin={coin} key={coin.id} setChart={setChart}/>))}
+            {coins.map((coin)=>(<TableRow coin={coin} key={coin.id} setChart={setChart} currency={currency} coin1={coin1}setCoin1={setCoin1}/>))}
           </tbody>
 
           </table>}
@@ -39,7 +43,8 @@ function TableCoin({coins,isLoading,setChart}) {
 export default TableCoin;
 
 
-const TableRow=({coin,setChart})=>{
+const TableRow=({coin,setChart,currency,coin1,setCoin1})=>{
+  
   const {
       id,
       image, 
@@ -49,9 +54,10 @@ const TableRow=({coin,setChart})=>{
       price_change_percentage_24h:price_change, 
       total_volume
   }= coin;
+    
     const showHandler=async ()=>{      
       try {
-        const res =await fetch(marketChart(id));
+        const res =await fetch(marketChart(id || coin1));
         const json=await res.json();
         setChart({...json,coin})
       } catch (error) {
@@ -59,6 +65,11 @@ const TableRow=({coin,setChart})=>{
       }
       
     }
+    if(coin1===id){
+      showHandler()
+    }
+    setCoin1(null)
+    
   return (
     <tr>
         <td>
@@ -68,7 +79,7 @@ const TableRow=({coin,setChart})=>{
           </div>
         </td>
         <td>{name}</td>
-        <td>${current_price.toLocaleString()}</td>
+        <td>{currency=="usd"?"$":currency=="eur"?<FaEuroSign />:<BsCurrencyYen />}{current_price.toLocaleString()}</td>
         <td className={price_change>0? styles.success : styles.error}>{price_change.toFixed(2)}%</td>
         <td>{total_volume.toLocaleString()}</td>
         <td><img src={price_change>0 ?chartUp:chartDown} alt="" /></td>

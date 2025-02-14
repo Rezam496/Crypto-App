@@ -5,11 +5,12 @@ import { searchCoin } from '../services/cryptoApi';
 
 import styles from './Search.module.css';
 
-function Search({currency,setCurrency}) {
+function Search({currency,setCurrency,setCoin1}) {
 
    const[text,setText]=useState("");
    const[coins,setCoins]=useState([]);
    const[isLoading,setIsLoading]=useState(false);
+   
 
    useEffect(()=>{
     const controller=new AbortController();
@@ -22,7 +23,6 @@ function Search({currency,setCurrency}) {
         try {
             const res= await fetch(searchCoin(text),{signal:controller.signal});
             const json=await res.json();
-            console.log(json)
             if(json.coins){
                 setCoins(json.coins);
                 setIsLoading(false);
@@ -36,9 +36,10 @@ function Search({currency,setCurrency}) {
     search();
     return()=>controller.abort();
    },[text])
-
+   
   return (
     <div className={styles.searchBox}>
+
         <input type="text" placeholder='Search' value={text} onChange={e=>setText(e.target.value)}/>
         <select value={currency}onChange={(e)=>(setCurrency(e.target.value))} >
             <option value="usd">USD</option>
@@ -46,6 +47,7 @@ function Search({currency,setCurrency}) {
             <option value="usd">Toman</option>
             <option value="jpy">JPY</option>
         </select>
+
         {(!!coins.length || isLoading)&&(
             <div className={styles.searchResult}>
                 {isLoading && <LineWave
@@ -55,7 +57,7 @@ function Search({currency,setCurrency}) {
                         middleLineColor="red"
                                 />}
                 <ul>
-                    {coins.map(coin=><li key={coin.id}>
+                    {coins.map(coin=><li key={coin.id} onClick={()=>setCoin1(coin.id)}>
                         <img src={coin.thumb} alt={coin.name} />
                         <p>{coin.name}</p>
                     </li>)}

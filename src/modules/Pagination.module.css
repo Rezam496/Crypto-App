@@ -28,3 +28,6 @@
 .selected{
     background-color: #3874ff;
 }
+.unselected{
+    background-color:none;
+}
