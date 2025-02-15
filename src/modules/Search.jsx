@@ -5,7 +5,7 @@ import { searchCoin } from '../services/cryptoApi';
 
 import styles from './Search.module.css';
 
-function Search({currency,setCurrency,setCoin1}) {
+function Search({currency,despatch,setCoin1}) {
 
    const[text,setText]=useState("");
    const[coins,setCoins]=useState([]);
@@ -41,7 +41,7 @@ function Search({currency,setCurrency,setCoin1}) {
     <div className={styles.searchBox}>
 
         <input type="text" placeholder='Search' value={text} onChange={e=>setText(e.target.value)}/>
-        <select value={currency}onChange={(e)=>(setCurrency(e.target.value))} >
+        <select value={currency}onChange={(e)=>(despatch({type:"CHANGE",payload:e.target.value}))} >
             <option value="usd">USD</option>
             <option value="eur">EUR</option>
             <option value="usd">Toman</option>
